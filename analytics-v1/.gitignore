@@ -1,0 +1,9 @@
+# Raw access logs are NEVER committed. Treat them as PII — pre-hash.
+sample-logs/*
+!sample-logs/.gitkeep
+
+# Per-run intermediate artifacts.
+__pycache__/
+*.pyc
+.venv/
+out/
