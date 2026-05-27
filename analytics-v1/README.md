@@ -1,5 +1,14 @@
 # analytics-v1 — dexli.dev family traffic instrumentation
 
+> **Status: ARCHIVED 2026-05-27.** Superseded before first real-log run:
+> M chose Umami (self-hosted, JS snippet, matches Deadrop's setup) for
+> production analytics rather than this server-side log-parser path.
+> The parser is hand-verified against the synthetic fixture and remains
+> as a fallback if Umami ever leaves gaps. Do not extend without a fresh
+> dispatch.
+
+
+
 Run-on-demand parser for Traefik access logs across `webhook.dexli.dev`,
 `cron.dexli.dev`, and `regex.dexli.dev`. Emits three metric families as
 markdown. **Server-side log analysis only — no client-side tracking, no
