@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Shared family infrastructure for dexli.dev tiny-tools — URL handoff builder + canonical sibling registry.",
   "scripts": {
+    "postinstall": "node scripts/init-vendored.mjs",
     "test": "vitest run",
     "check": "tsc --noEmit"
   },

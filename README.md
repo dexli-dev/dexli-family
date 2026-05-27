@@ -14,14 +14,28 @@ could have typed.
 ## Develop
 
 ```sh
-npm install
+npm install   # also fetches pinned sibling parsers as git submodules
 npm test
 ```
 
+`npm install` runs a `postinstall` hook that initializes the
+`vendored/cron-dexli` and `vendored/regex-dexli` git submodules. Those
+submodules carry each shipped sibling's production `src/lib/url-state.ts`
+at a pinned SHA — the round-trip test suite imports those parsers by
+reference (bar item 4) so cross-cycle drift is detected immediately when
+a sibling's parser changes shape.
+
+A fresh `git clone` of this repo alone is sufficient. No
+`--recurse-submodules` flag required; `npm install` handles it.
+
 ## Add a sibling
 
-See the discipline doc co-located with the family config (path TBD by engine
-cycle-2 scope).
+See [`DISCIPLINE.md`](./DISCIPLINE.md) for the add-sibling procedure +
+slug-stability promise + the three sender preconditions.
+
+When you add a new sibling, also add it as a submodule at
+`vendored/<sibling>-dexli` pinned to its current production SHA, and
+extend the round-trip test suite to import the new submodule's parser.
 
 ## Design rationale
 
