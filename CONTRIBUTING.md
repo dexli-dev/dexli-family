@@ -53,24 +53,27 @@ A commit's bucket is determined by:
 
 Between-cycle work — engineers' standing-mandate work that lands in this
 repo between formal cycle dispatches — uses the `wip(<workstream>):` subject
-prefix (e.g. `wip(analytics-v1):`). These commits MUST still carry an
-`Engineer:` body trailer naming the responsible role (`engine`, `frontend`,
-or `scaffold`).
+prefix (e.g. `wip(analytics-v1):`). **Drop the `Engineer:` body trailer on
+`wip(...)` commits.** The trailer is the scope-discriminator that flags
+"this commit belongs to a cycle's attribution audit." Between-cycle work
+deliberately stays out of that scope — no trailer = clear out-of-audit
+signal.
 
-Between-cycle commits live on `master` between cycle frozen-tags. They are
-NOT part of any cycle's bar-item-11 attribution accounting — each cycle's
-ratio is computed against the commits between its scaffold-start sha and
-its `cycle-N/submit-K` tag, which by construction excludes between-cycle
-work landed after a prior tag. If a between-cycle commit needs to be
-counted within a cycle (e.g. because it materially affects that cycle's
-deliverable), promote it to a `feat(<role>):` / `fix(<role>):` /
-`test(<role>):` subject + include it in the cycle's review trail.
+If eval bucketing accidentally sweeps a `wip(...)` commit into a cycle's
+audit range (sloppy scaffold-start sha selection), a trailer-less commit
+falls to the convention's "unattributable → CTO bucket" fallback. This
+fails in the CTO-bucket-inflation direction, which is benign w.r.t. bar
+item 11's ≥70%-engineer-attribution threshold — CTO noise doesn't shift
+the ratio across that boundary. The opposite shape (trailer required on
+`wip(...)`) would fail in the lateral direction — cross-crediting engineer
+work between cycles — which DOES shift bar item 11's measurement.
+See [[feedback_engineer_trailer_scoping]] for the full direction-of-failure
+analysis.
 
-When eval bucketing walks `git log <prior-cycle-tag>..<current-cycle-tag>`,
-`wip(<workstream>):` commits within that range follow the same `Engineer:`
-trailer bucketing rules as any other commit — but the cycle's scaffold-
-start sha should be chosen to exclude them when they aren't this cycle's
-work.
+If a `wip(...)` commit later needs to be counted within a cycle (e.g.
+because it materially affects that cycle's deliverable), promote it to
+a `feat(<role>):` / `fix(<role>):` / `test(<role>):` subject WITH an
+`Engineer:` trailer, and include it in the cycle's review trail.
 
 ## Trivial-exclusion list
 
