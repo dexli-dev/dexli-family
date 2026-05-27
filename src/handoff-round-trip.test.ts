@@ -13,8 +13,8 @@
 
 import { beforeEach, describe, expect, it } from 'vitest';
 import { buildHandoffUrl } from './handoff';
-import { readUrlState as readCronState } from '../../cron-dexli/src/lib/url-state';
-import { readUrlState as readRegexState } from '../../regex-dexli/src/lib/url-state';
+import { readUrlState as readCronState } from '../vendored/cron-dexli/src/lib/url-state';
+import { readUrlState as readRegexState } from '../vendored/regex-dexli/src/lib/url-state';
 
 function navigateTo(url: string): void {
 	const u = new URL(url);
