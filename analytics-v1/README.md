@@ -40,6 +40,12 @@ Hard rules, all enforced before any value lands on disk:
   visitor in week-2's report). Recommended cadence: rotate the secret each
   CEO-report cycle. For ad-hoc 7-day runs, a single secret per run is fine
   and the parser surfaces only weekly/daily counts, never cross-run links.
+- **Opt-in cross-window comparison.** When CEO asks "this week's traffic
+  vs last week's," the privacy-safe path is to **reuse last week's secret**
+  across both windows (or re-run last week's data with the new secret and
+  compare aggregates). Per-run rotation is the safe default; explicit
+  reuse is the deliberate opt-in for comparison asks. Document which
+  secret each report used so the comparison decision is traceable.
 - **No user-agent fingerprinting.** Robots are filtered (see `ROBOT_UA_HINTS`
   in the parser), but the UA string itself is never reported or stored.
 - **No PII in commits.** The `sample-logs/` directory is gitignored. The
