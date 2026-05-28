@@ -1,0 +1,52 @@
+<!--
+Working example OG share-card for webhook.dexli.dev. 1200×630, X/Open Graph
+standard. Brand palette inherited from app.css (--bg, --accent, --fg,
+--muted). Per-sibling variants: copy this file, swap glyph + sibling name +
+tagline. Render with `node tools/og-image-gen/render.mjs <this.svg>
+<out.png>`.
+
+Layout notes (so per-sibling copies stay visually consistent):
+- Background: solid #0a0b0d (--bg).
+- Lime glow ring: radial accent. Pure decoration.
+- Glyph tile: 220×220 rounded square, lime fill (#c6f135), dark glyph.
+- Wordmark: tool name + .dexli.dev TLD, Bricolage-style display weight.
+- Tagline: one short sentence describing the tool's value.
+- Footer: "part of the dexli.dev tiny-tools family".
+
+Font note: this template uses system-ui for portability across rendering
+environments. The live site uses Bricolage Grotesque (per fonts.css);
+since the OG card is a static export-time artifact, matching the live
+typography exactly is nice-to-have, not required.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c6f135" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#c6f135" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0a0b0d"/>
+  <ellipse cx="950" cy="120" rx="500" ry="320" fill="url(#glow)"/>
+  <ellipse cx="100" cy="600" rx="450" ry="280" fill="url(#glow)" opacity="0.4"/>
+
+  <!-- Glyph tile -->
+  <rect x="90" y="205" width="220" height="220" rx="32" fill="#c6f135"/>
+  <text x="200" y="365" font-family="system-ui, sans-serif" font-size="140"
+        font-weight="800" text-anchor="middle" fill="#0a0b0d">⌁</text>
+
+  <!-- Wordmark -->
+  <text x="360" y="330" font-family="system-ui, sans-serif" font-size="96"
+        font-weight="800" fill="#e7ebf0" letter-spacing="-2">webhook<tspan
+        fill="#5d6470">.dexli.dev</tspan></text>
+
+  <!-- Tagline -->
+  <text x="360" y="395" font-family="system-ui, sans-serif" font-size="32"
+        font-weight="500" fill="#99a1ad">Temporary webhook inbox — capture,
+        inspect, replay HTTP callbacks.</text>
+
+  <!-- Footer -->
+  <text x="90" y="560" font-family="system-ui, sans-serif" font-size="22"
+        font-weight="500" fill="#5d6470">part of the dexli.dev tiny-tools
+        family</text>
+</svg>

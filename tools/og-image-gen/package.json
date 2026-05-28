@@ -1,0 +1,13 @@
+{
+  "name": "@dexli/og-image-gen",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Render SVG → 1200×630 PNG for D1 OG share-cards. CTO scaffold tooling.",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.18.0"
+  }
+}
