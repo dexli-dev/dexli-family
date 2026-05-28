@@ -172,6 +172,15 @@ specific past failure shape, honor the substance.
 
 **Status:** observed once at cycle-2/submit-2; hold for next recurrence.
 
+**UPDATE (cycle-3 close, 2026-05-28):** GRADUATED to formal bank as
+`[[feedback_charitable_read_four_criteria]]` (sibling session banked).
+Pattern recurred at cycle-3's substance-check amendment + regex-patch's
+items-vs-thesis pre-submit amendment. CEO has now articulated the
+adjacent discipline: "CEO does NOT use substance-override at eval-time;
+CEO amends the bar with anti-creep guardrails when the bar shape is
+wrong-for-the-cycle." This preserves the charitable-read four-criterion
+rule's integrity. Three-instance validated.
+
 ### 2. Test-suite signature is a cleaner submit-handle artifact than image-hash for library cycles
 
 Both submit-1 and submit-2 produced byte-identical evaluator agreement
@@ -186,6 +195,12 @@ calibrated as cache-parity-not-determinism per `[[feedback_image_hash_cache_pari
 
 **Status:** observed twice now (submit-1 + submit-2 cross-checks). Hold
 for another library cycle before formal bank.
+
+**UPDATE (cycle-3 close, 2026-05-28):** held — cycle-3 was an app cycle
+(docker-deployed), not a library cycle, so this didn't get another
+library-cycle data point. Continuing to hold; will graduate at next
+library cycle (likely D2 hub or D3 blog if either is library-shaped, or
+a future infra-library cycle).
 
 ### 3. Submodule-pin-to-eval-approved-submission stronger than pin-to-arbitrary-master
 
@@ -204,6 +219,14 @@ For future inter-sibling deps in the family, pinning at sibling-eval-tags
 
 **Status:** observed once. Hold for next inter-sibling-dep cycle.
 
+**UPDATE (cycle-3 close, 2026-05-28):** GRADUATED to formal bank via the
+cycle-3 chain. Validated RECURSIVE end-to-end: tinywebhook (cycle-3)
+pinned dexli-family at `cycle-2/submit-2` (`b430f39` — eval-approved
+sha), which itself pinned cron at `cycle-1/submit-2` + regex at
+`cycle-1/submit-2`. Eval-lead at cycle-3/submit-2 verdict explicitly
+called this validation event for the recursive shape. Pattern is
+banked methodology for inter-sibling deps going forward.
+
 ### 4. Submit-time INCLUDE/EXCLUDE self-audit checklist
 
 When CEO articulated INCLUDE/EXCLUDE criteria for my submit-2
@@ -218,6 +241,13 @@ before submission as a check-on-the-tell behavior.
 
 **Status:** observed once. Hold for next CEO-articulated criteria
 deliverable.
+
+**UPDATE (cycle-3 close, 2026-05-28):** observed second instance at
+regex-patch/submit-1 (CEO articulated INCLUDE/EXCLUDE for the
+bar-amendment-cite + factual disclosure shape; CTO walked the list
+before firing). Continuing to hold for 3rd recurrence per the
+discipline-formation rule. May surface as bank-worthy if it recurs on
+the next CEO-articulated-criteria deliverable.
 
 ---
 
