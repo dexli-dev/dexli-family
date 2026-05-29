@@ -34,6 +34,75 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 		expect(FAMILY.diff.inputs).toEqual({ a: 'a', b: 'b', mode: 'mode' });
 	});
 
+	describe('display block (CEO two-flag lock 2026-05-29)', () => {
+		it('webhook is published with apexCard content', () => {
+			expect(FAMILY.webhook.display.published).toBe(true);
+			expect(FAMILY.webhook.display.apexCard).toEqual({
+				glyph: '⌁',
+				title: 'webhook',
+				tagline: 'Temporary webhook inbox — capture, inspect, replay HTTP callbacks.'
+			});
+		});
+
+		it('cron is published with apexCard content', () => {
+			expect(FAMILY.cron.display.published).toBe(true);
+			expect(FAMILY.cron.display.apexCard).toEqual({
+				glyph: '◷',
+				title: 'cron',
+				tagline: 'Cron expression parser — firings, timezones, shareable URL state.'
+			});
+		});
+
+		it('regex is published with apexCard content', () => {
+			expect(FAMILY.regex.display.published).toBe(true);
+			expect(FAMILY.regex.display.apexCard).toEqual({
+				glyph: '∋',
+				title: 'regex',
+				tagline: 'Live regex tester — highlight, enumerate, share via URL.'
+			});
+		});
+
+		it('diff is pre-ship: apexCard=null AND published=false (both flags distinct concerns)', () => {
+			expect(FAMILY.diff.display.published).toBe(false);
+			expect(FAMILY.diff.display.apexCard).toBeNull();
+		});
+
+		it('every published sibling has non-null apexCard (no published-without-content state)', () => {
+			for (const sib of Object.values(FAMILY)) {
+				if (sib.display.published) {
+					expect(sib.display.apexCard).not.toBeNull();
+				}
+			}
+		});
+
+		it('every apexCard has all three required fields (glyph, title, tagline)', () => {
+			for (const sib of Object.values(FAMILY)) {
+				if (sib.display.apexCard !== null) {
+					expect(typeof sib.display.apexCard.glyph).toBe('string');
+					expect(typeof sib.display.apexCard.title).toBe('string');
+					expect(typeof sib.display.apexCard.tagline).toBe('string');
+					expect(sib.display.apexCard.glyph.length).toBeGreaterThan(0);
+					expect(sib.display.apexCard.title.length).toBeGreaterThan(0);
+					expect(sib.display.apexCard.tagline.length).toBeGreaterThan(0);
+				}
+			}
+		});
+
+		it('apex auto-render filter (published === true && apexCard !== null) selects 3 siblings pre-D4-ship', () => {
+			const visible = Object.values(FAMILY).filter(
+				(s) => s.display.published === true && s.display.apexCard !== null
+			);
+			expect(visible.map((s) => s.slug).sort()).toEqual(['cron', 'regex', 'webhook']);
+		});
+
+		it('every apexCard glyph is distinct across siblings (D2/D4 bar item 10 enforcement)', () => {
+			const glyphs = Object.values(FAMILY)
+				.map((s) => s.display.apexCard?.glyph)
+				.filter((g): g is string => g != null);
+			expect(new Set(glyphs).size).toBe(glyphs.length);
+		});
+	});
+
 	it('every baseUrl is HTTPS with no trailing slash', () => {
 		for (const sib of Object.values(FAMILY)) {
 			expect(sib.baseUrl.startsWith('https://')).toBe(true);
@@ -46,6 +115,10 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 		for (const sib of Object.values(FAMILY)) {
 			expect(Object.isFrozen(sib)).toBe(true);
 			expect(Object.isFrozen(sib.inputs)).toBe(true);
+			expect(Object.isFrozen(sib.display)).toBe(true);
+			if (sib.display.apexCard !== null) {
+				expect(Object.isFrozen(sib.display.apexCard)).toBe(true);
+			}
 		}
 	});
 });
