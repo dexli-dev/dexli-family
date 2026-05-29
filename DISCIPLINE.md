@@ -19,11 +19,49 @@ onboarding to family-tools infra reads this BEFORE touching
 A sibling joins the family registry only when ALL of:
 
 1. The sibling has shipped to production (its `.dexli.dev` subdomain is
-   live, serving real users).
+   live, serving real users) **OR is the subject of an active
+   sealed-bar cycle requiring registration as a submit oracle.**
+   *(Carve-out added 2026-05-29 from D4 cycle escalation —
+   anti-speculation purpose preserved by the sealed-bar requirement.
+   See "Cycle-N carve-out rationale" below.)*
 2. Its URL-state contract is published in its repo at
    `src/lib/url-state.ts` (or the equivalent canonical location for
    that repo).
 3. CTO approves the registration commit.
+
+### Cycle-N carve-out rationale (added 2026-05-29)
+
+The "shipped to production" precondition was V1-written as an
+anti-speculation guard — preventing dead API surface from speculative
+slug pre-allocation (e.g. registering `markdown` for a tool nobody's
+built). The spirit is "don't register tools that don't exist."
+
+But that letter creates a circular dependency for any cycle that uses
+cycle-2's family-handoff as an in-cycle bar item: a venture-N venture
+can't ship without bar-mandated registration, and the registration
+needs the venture shipped. D4 (diff.dexli.dev) hit this directly when
+item 7 required registration as a submit oracle. Every future venture
+that uses family-handoff at v1 would re-litigate the same trap.
+
+The "sealed-bar cycle" qualifier in clause 1 preserves the
+anti-speculation purpose by structural means: registration during a
+cycle is intentional (a sealed bar mandates it as a verifiable
+submit oracle) rather than speculative (random pre-allocation
+unbacked by any concrete plan). A sealed bar is itself the
+non-speculative anchor.
+
+Slug-stability (§2) still applies unchanged: once registered, the
+slug is part of the family API forever, regardless of whether the
+sibling ultimately ships. If a cycle that registered a sibling is
+abandoned before deploy, the entry stays in the registry and the
+sibling-record's `baseUrl` continues to be the canonical landing for
+any future handoff URLs minted against the slug. Operators reading
+the registry should treat any entry as a public commitment to that
+slug-name and base-URL, irrespective of deploy state at any moment.
+
+Precondition 2 (URL-state contract published) remains in force during
+the carve-out: registration can happen mid-cycle once the recipient's
+`readUrlState()` is in-tree, even if the sibling isn't yet live.
 
 Add procedure:
 
