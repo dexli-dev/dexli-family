@@ -133,17 +133,23 @@ export const FAMILY: Readonly<Record<FamilySlug, FamilySibling>> = Object.freeze
 			b: 'b',
 			mode: 'mode'
 		}),
-		// Pre-ship state per CEO two-flag lock 2026-05-29: registered
-		// mid-D4-cycle (§1.1 carve-out) but not yet live. Both flags
-		// assert the pre-ship status as distinct concerns —
-		// `apexCard: null` ("card content not yet authored") +
-		// `published: false` ("not yet live; don't surface in apex").
-		// Ship moment: flip `published: false → true` + populate
-		// `apexCard` with { glyph, title, tagline } in one between-cycle
-		// scaffold commit lockstep with M's diff.dexli.dev manual deploy.
+		// Live as of 2026-05-29 — M deployed diff.dexli.dev after
+		// D4/submit-1 APPROVE. Step 5 of CEO's apex-TOOLS auto-render
+		// sequence: both flags flip in one commit at ship moment.
+		// `apexCard` populated with { glyph: 'Δ' (Wordmark default,
+		// distinct from ⌁/◷/∋/❖), title, tagline matching the parallel
+		// shape of webhook/cron/regex entries }. `published: true`
+		// turns the apex auto-render filter from selecting 3 siblings
+		// to selecting 4 siblings; dexli-hub picks this up via its
+		// next submodule pin bump (lockstep with this commit per
+		// CONTRIBUTING.md submodule discipline).
 		display: Object.freeze({
-			apexCard: null,
-			published: false
+			apexCard: Object.freeze({
+				glyph: 'Δ',
+				title: 'diff',
+				tagline: 'Two-pane text diff — paste, see what changed, share via URL.'
+			}),
+			published: true
 		})
 	})
 } as const);

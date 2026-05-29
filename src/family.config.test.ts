@@ -62,9 +62,13 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 			});
 		});
 
-		it('diff is pre-ship: apexCard=null AND published=false (both flags distinct concerns)', () => {
-			expect(FAMILY.diff.display.published).toBe(false);
-			expect(FAMILY.diff.display.apexCard).toBeNull();
+		it('diff is published with apexCard content (post-D4-ship Step 5 flip 2026-05-29)', () => {
+			expect(FAMILY.diff.display.published).toBe(true);
+			expect(FAMILY.diff.display.apexCard).toEqual({
+				glyph: 'Δ',
+				title: 'diff',
+				tagline: 'Two-pane text diff — paste, see what changed, share via URL.'
+			});
 		});
 
 		it('every published sibling has non-null apexCard (no published-without-content state)', () => {
@@ -88,11 +92,11 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 			}
 		});
 
-		it('apex auto-render filter (published === true && apexCard !== null) selects 3 siblings pre-D4-ship', () => {
+		it('apex auto-render filter (published === true && apexCard !== null) selects all 4 siblings post-D4-ship', () => {
 			const visible = Object.values(FAMILY).filter(
 				(s) => s.display.published === true && s.display.apexCard !== null
 			);
-			expect(visible.map((s) => s.slug).sort()).toEqual(['cron', 'regex', 'webhook']);
+			expect(visible.map((s) => s.slug).sort()).toEqual(['cron', 'diff', 'regex', 'webhook']);
 		});
 
 		it('every apexCard glyph is distinct across siblings (D2/D4 bar item 10 enforcement)', () => {
