@@ -7,7 +7,7 @@
 // Adding a new sibling = a new entry here + a new round-trip test. See
 // DISCIPLINE.md for the procedure and the slug-stability promise.
 
-export type FamilySlug = 'webhook' | 'cron' | 'regex';
+export type FamilySlug = 'webhook' | 'cron' | 'regex' | 'diff';
 
 export interface FamilySibling {
 	/** Stable, public slug identifying the sibling. Once registered for a
@@ -50,6 +50,20 @@ export const FAMILY: Readonly<Record<FamilySlug, FamilySibling>> = Object.freeze
 			pattern: 'p',
 			text: 't',
 			flags: 'f'
+		})
+	}),
+	diff: Object.freeze({
+		slug: 'diff',
+		baseUrl: 'https://diff.dexli.dev',
+		path: '/',
+		inputs: Object.freeze({
+			// Flat 1:1 mapping per diff's `src/lib/url-state.ts` contract —
+			// logical and URL-param names coincide. Bar D4 product call 5
+			// names a/b/mode as both the URL-share-scope AND the canonical
+			// state names; flat mapping is bar-faithful.
+			a: 'a',
+			b: 'b',
+			mode: 'mode'
 		})
 	})
 } as const);

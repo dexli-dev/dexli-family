@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { FAMILY, isFamilySlug } from './family.config';
 
-describe('FAMILY canonical registry (bar item 2)', () => {
-	it('registers exactly the three v1 siblings: webhook, cron, regex', () => {
-		expect(Object.keys(FAMILY).sort()).toEqual(['cron', 'regex', 'webhook']);
+describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
+	it('registers the v1 siblings + D4-registered diff: webhook, cron, regex, diff', () => {
+		expect(Object.keys(FAMILY).sort()).toEqual(['cron', 'diff', 'regex', 'webhook']);
 	});
 
 	it('webhook registers with empty input map (path-based identity)', () => {
@@ -27,6 +27,13 @@ describe('FAMILY canonical registry (bar item 2)', () => {
 		expect(FAMILY.regex.inputs).toEqual({ pattern: 'p', text: 't', flags: 'f' });
 	});
 
+	it('diff registers with a + b + mode inputs mapped to ?a=, ?b=, ?mode= (D4 mid-cycle per §1.1 carve-out)', () => {
+		expect(FAMILY.diff.slug).toBe('diff');
+		expect(FAMILY.diff.baseUrl).toBe('https://diff.dexli.dev');
+		expect(FAMILY.diff.path).toBe('/');
+		expect(FAMILY.diff.inputs).toEqual({ a: 'a', b: 'b', mode: 'mode' });
+	});
+
 	it('every baseUrl is HTTPS with no trailing slash', () => {
 		for (const sib of Object.values(FAMILY)) {
 			expect(sib.baseUrl.startsWith('https://')).toBe(true);
@@ -48,6 +55,7 @@ describe('isFamilySlug type guard', () => {
 		expect(isFamilySlug('webhook')).toBe(true);
 		expect(isFamilySlug('cron')).toBe(true);
 		expect(isFamilySlug('regex')).toBe(true);
+		expect(isFamilySlug('diff')).toBe(true);
 	});
 
 	it('returns false for unknown strings', () => {

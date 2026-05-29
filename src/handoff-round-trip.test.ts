@@ -15,6 +15,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { buildHandoffUrl } from './handoff';
 import { readUrlState as readCronState } from '../vendored/cron-dexli/src/lib/url-state';
 import { readUrlState as readRegexState } from '../vendored/regex-dexli/src/lib/url-state';
+import { readUrlState as readDiffState } from '../vendored/diff-dexli/src/lib/url-state';
 
 function navigateTo(url: string): void {
 	const u = new URL(url);
@@ -88,6 +89,65 @@ describe('round-trip via real regex parser (bar item 4)', () => {
 	});
 });
 
+describe('round-trip via real diff parser (D4 bar item 7)', () => {
+	// diff's `readUrlState(URL|URLSearchParams)` is parameterised (unlike
+	// cron/regex which read `window.location.search` directly), so we hand
+	// it a fresh URL constructed from the navigated window after navigateTo.
+	function diffStateFromWindow() {
+		return readDiffState(new URL(window.location.href));
+	}
+
+	it('a + b + mode survives builder → readDiffState', () => {
+		const r = buildHandoffUrl({
+			to: 'diff',
+			inputs: { a: 'hello\nworld', b: 'hello\nWORLD!', mode: 'word' }
+		});
+		expect(r.ok).toBe(true);
+		if (!r.ok) return;
+		navigateTo(r.url);
+		const state = diffStateFromWindow();
+		expect(state.a).toBe('hello\nworld');
+		expect(state.b).toBe('hello\nWORLD!');
+		expect(state.mode).toBe('word');
+	});
+
+	it('a + b without explicit mode falls back to default `line`', () => {
+		const r = buildHandoffUrl({
+			to: 'diff',
+			inputs: { a: 'foo', b: 'bar' }
+		});
+		expect(r.ok).toBe(true);
+		if (!r.ok) return;
+		navigateTo(r.url);
+		const state = diffStateFromWindow();
+		expect(state.a).toBe('foo');
+		expect(state.b).toBe('bar');
+		expect(state.mode).toBe('line');
+	});
+
+	it('a alone (no b, no mode) recovers a with empty b + default mode', () => {
+		const r = buildHandoffUrl({ to: 'diff', inputs: { a: 'just-a' } });
+		expect(r.ok).toBe(true);
+		if (!r.ok) return;
+		navigateTo(r.url);
+		const state = diffStateFromWindow();
+		expect(state.a).toBe('just-a');
+		expect(state.b).toBe('');
+		expect(state.mode).toBe('line');
+	});
+
+	it('mode=line round-trips explicitly (default not collapsed by builder)', () => {
+		const r = buildHandoffUrl({
+			to: 'diff',
+			inputs: { a: 'x', b: 'y', mode: 'line' }
+		});
+		expect(r.ok).toBe(true);
+		if (!r.ok) return;
+		navigateTo(r.url);
+		expect(diffStateFromWindow().mode).toBe('line');
+	});
+});
+
 describe('special-character round-trip — every class in bar item 5', () => {
 	// Bar item 5: "newlines, percent signs, ampersands, plus signs, equals
 	// signs, square brackets, parens, slashes, backslashes, hashes, question
@@ -149,6 +209,35 @@ describe('special-character round-trip — every class in bar item 5', () => {
 				if (!r.ok) return;
 				navigateTo(r.url);
 				expect(readCronState().expression).toBe(value);
+			});
+		}
+	});
+
+	describe('via diff left pane (param ?a=)', () => {
+		// Same "every character class survives every registered recipient"
+		// check applied to diff's `a` pane content. Per D4 bar item 5, diff
+		// must render non-ASCII Unicode including emoji cleanly; the round-
+		// trip oracle proves the family-handoff path preserves bytes through
+		// the URL encode/decode cycle into the real diff parser.
+		for (const [label, value] of CASES) {
+			it(`${label}: round-trip preserves bytes`, () => {
+				const r = buildHandoffUrl({ to: 'diff', inputs: { a: value } });
+				expect(r.ok, `builder failed: ${label}`).toBe(true);
+				if (!r.ok) return;
+				navigateTo(r.url);
+				expect(readDiffState(new URL(window.location.href)).a).toBe(value);
+			});
+		}
+	});
+
+	describe('via diff right pane (param ?b=)', () => {
+		for (const [label, value] of CASES) {
+			it(`${label}: round-trip preserves bytes`, () => {
+				const r = buildHandoffUrl({ to: 'diff', inputs: { b: value } });
+				expect(r.ok, `builder failed: ${label}`).toBe(true);
+				if (!r.ok) return;
+				navigateTo(r.url);
+				expect(readDiffState(new URL(window.location.href)).b).toBe(value);
 			});
 		}
 	});

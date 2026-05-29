@@ -4,3 +4,6 @@
 [submodule "vendored/regex-dexli"]
 	path = vendored/regex-dexli
 	url = https://github.com/dexli-dev/regex-dexli.git
+[submodule "vendored/diff-dexli"]
+	path = vendored/diff-dexli
+	url = https://github.com/dexli-dev/diff-dexli.git

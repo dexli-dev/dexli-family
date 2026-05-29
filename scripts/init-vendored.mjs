@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-const SIBLINGS = ['cron-dexli', 'regex-dexli'];
+const SIBLINGS = ['cron-dexli', 'regex-dexli', 'diff-dexli'];
 
 function run(cmd) {
 	execSync(cmd, { cwd: REPO_ROOT, stdio: 'inherit' });
