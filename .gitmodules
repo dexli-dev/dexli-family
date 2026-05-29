@@ -1,6 +1,6 @@
 [submodule "vendored/cron-dexli"]
 	path = vendored/cron-dexli
-	url = https://github.com/Milkslayer/cron-dexli.git
+	url = https://github.com/dexli-dev/cron-dexli.git
 [submodule "vendored/regex-dexli"]
 	path = vendored/regex-dexli
-	url = https://github.com/Milkslayer/regex-dexli.git
+	url = https://github.com/dexli-dev/regex-dexli.git

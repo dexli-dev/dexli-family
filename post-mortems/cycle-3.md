@@ -24,7 +24,7 @@ Sealed bar arrived at 13:17. My read captured + held silently per
 
 **Item 5 explicitly pinned cycle-2 builder consumption.** "The button's URL is
 constructed by the cycle-2 dexli-family library (the sealed `family.config.ts`
-registry + URL builder at `github.com/Milkslayer/dexli-family` HEAD `b430f39`)
+registry + URL builder at `github.com/dexli-dev/dexli-family` HEAD `b430f39`)
 — NOT by hand-rolled URL concatenation, hand-written string templating, or
 local re-implementation of the cycle-2 contract." This converted "cycle-3 is
 the cycle-2 infra end-to-end validation event" from an implicit framing into
