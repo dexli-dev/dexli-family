@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { FAMILY, isFamilySlug } from './family.config';
 
 describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
-	it('registers the v1 siblings + D4-registered diff: webhook, cron, regex, diff', () => {
-		expect(Object.keys(FAMILY).sort()).toEqual(['cron', 'diff', 'regex', 'webhook']);
+	it('registers the v1 siblings + D4 diff + venture-5 transcript', () => {
+		expect(Object.keys(FAMILY).sort()).toEqual(['cron', 'diff', 'regex', 'transcript', 'webhook']);
 	});
 
 	it('webhook registers with empty input map (path-based identity)', () => {
@@ -32,6 +32,13 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 		expect(FAMILY.diff.baseUrl).toBe('https://diff.dexli.dev');
 		expect(FAMILY.diff.path).toBe('/');
 		expect(FAMILY.diff.inputs).toEqual({ a: 'a', b: 'b', mode: 'mode' });
+	});
+
+	it('transcript registers with empty input map (privacy-model product decision: content never in URLs)', () => {
+		expect(FAMILY.transcript.slug).toBe('transcript');
+		expect(FAMILY.transcript.baseUrl).toBe('https://transcript.dexli.dev');
+		expect(FAMILY.transcript.path).toBe('/');
+		expect(FAMILY.transcript.inputs).toEqual({});
 	});
 
 	describe('display block (CEO two-flag lock 2026-05-29)', () => {
@@ -71,6 +78,15 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 			});
 		});
 
+		it('transcript is published with ❝ apexCard content (venture-5 ship flip 2026-06-10)', () => {
+			expect(FAMILY.transcript.display.published).toBe(true);
+			expect(FAMILY.transcript.display.apexCard).toEqual({
+				glyph: '❝',
+				title: 'transcript',
+				tagline: 'Read LLM .jsonl logs as a conversation — parsed in your browser, secrets flagged.'
+			});
+		});
+
 		it('every published sibling has non-null apexCard (no published-without-content state)', () => {
 			for (const sib of Object.values(FAMILY)) {
 				if (sib.display.published) {
@@ -92,11 +108,11 @@ describe('FAMILY canonical registry (bar item 2 + D4 carve-out)', () => {
 			}
 		});
 
-		it('apex auto-render filter (published === true && apexCard !== null) selects all 4 siblings post-D4-ship', () => {
+		it('apex auto-render filter (published === true && apexCard !== null) selects all 5 siblings post-transcript-ship', () => {
 			const visible = Object.values(FAMILY).filter(
 				(s) => s.display.published === true && s.display.apexCard !== null
 			);
-			expect(visible.map((s) => s.slug).sort()).toEqual(['cron', 'diff', 'regex', 'webhook']);
+			expect(visible.map((s) => s.slug).sort()).toEqual(['cron', 'diff', 'regex', 'transcript', 'webhook']);
 		});
 
 		it('every apexCard glyph is distinct across siblings (D2/D4 bar item 10 enforcement)', () => {
@@ -133,6 +149,7 @@ describe('isFamilySlug type guard', () => {
 		expect(isFamilySlug('cron')).toBe(true);
 		expect(isFamilySlug('regex')).toBe(true);
 		expect(isFamilySlug('diff')).toBe(true);
+		expect(isFamilySlug('transcript')).toBe(true);
 	});
 
 	it('returns false for unknown strings', () => {

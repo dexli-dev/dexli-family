@@ -7,7 +7,7 @@
 // Adding a new sibling = a new entry here + a new round-trip test. See
 // DISCIPLINE.md for the procedure and the slug-stability promise.
 
-export type FamilySlug = 'webhook' | 'cron' | 'regex' | 'diff';
+export type FamilySlug = 'webhook' | 'cron' | 'regex' | 'diff' | 'transcript';
 
 /**
  * Display content for the apex hub's tools-index card. `null` when the
@@ -148,6 +148,28 @@ export const FAMILY: Readonly<Record<FamilySlug, FamilySibling>> = Object.freeze
 				glyph: 'Δ',
 				title: 'diff',
 				tagline: 'Two-pane text diff — paste, see what changed, share via URL.'
+			}),
+			published: true
+		})
+	}),
+	transcript: Object.freeze({
+		slug: 'transcript',
+		baseUrl: 'https://transcript.dexli.dev',
+		path: '/',
+		// Deliberately empty — transcript's privacy model is that conversation
+		// content NEVER appears in a URL (transcripts carry secrets; the tool
+		// exists partly to flag them). No URL-state inputs means no handoff
+		// recipient surface; this is a product decision, not an omission.
+		inputs: Object.freeze({}),
+		// Registered + flipped in one commit at ship moment 2026-06-10 —
+		// cycle-1/submit-1 APPROVE (eval: 12/12 single-pass) with M-deploy
+		// same evening. Glyph '❝' (heavy quotation ornament — dialogue),
+		// distinct from ⌁/◷/∋/Δ and family-level ❖.
+		display: Object.freeze({
+			apexCard: Object.freeze({
+				glyph: '❝',
+				title: 'transcript',
+				tagline: 'Read LLM .jsonl logs as a conversation — parsed in your browser, secrets flagged.'
 			}),
 			published: true
 		})
