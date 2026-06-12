@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+	<!-- dexli-dev GitHub org avatar. Exact 32x scale-up of the apex hub
+	     favicon (dexli-hub/static/favicon.svg): ❖ family-index diamond,
+	     dark tile #0a0b0d + lime #c6f135. Full-bleed square, no corner
+	     radius — GitHub applies its own avatar mask. Glyph extents stay
+	     inside the circle-safe area (points lie on the axes). -->
+	<rect width="1024" height="1024" fill="#0a0b0d" />
+	<!-- Inner lattice painted first so its ends tuck under the frame —
+	     at 32px the overlap is invisible, at 1024px paint order matters. -->
+	<path d="M368 416 L656 416 M368 608 L656 608 M512 256 L512 768" stroke="#c6f135" stroke-width="44.8" stroke-linecap="round" opacity="0.55" />
+	<path d="M512 192 L768 512 L512 832 L256 512 Z" fill="none" stroke="#c6f135" stroke-width="70.4" stroke-linejoin="round" />
+</svg>
